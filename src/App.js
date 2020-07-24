@@ -34,7 +34,6 @@ const App = ()=>{
     oldList.forEach((indivItem)=>{
       if(indivItem.id===id){
         indivItem.isDone = true
-        console.log(indivItem)
         return indivItem
       }
     })
