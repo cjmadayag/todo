@@ -11,9 +11,10 @@ const App = ()=>{
   const [itemToEdit,setItemToEdit] = useState({})
 
   const AddItemOnList = (item)=>{
-    const oldList = list;
+    const oldList = [...list]
+
     if(isEditing){
-      oldList.forEach((indivItem)=>{
+      const newList = oldList.filter((indivItem)=>{
         if(indivItem.id===itemToEdit.id){
           indivItem.item = item
           return indivItem
@@ -21,23 +22,22 @@ const App = ()=>{
       })
       setIsEditing(false)
       setItemToEdit({})
-      setList([...oldList])
+      setList(newList)
     }else{
       setList([...oldList,{id:itemCount,item,isDone:false}])
       setItemCount(itemCount+1);
     }
-    
   }
 
   const doneButtonOnClick = (id)=>{
-    const oldList = list;
-    oldList.forEach((indivItem)=>{
+    const oldList = [...list];
+    const newList = oldList.filter((indivItem)=>{
       if(indivItem.id===id){
         indivItem.isDone = true
         return indivItem
       }
     })
-    setList([...oldList])
+    setList(newList)
   }
 
   const deleteButtonOnClick = (id)=>{
@@ -79,6 +79,7 @@ const App = ()=>{
           isEditing={isEditing}
           setIsEditing={setIsEditing}
           itemToEdit={itemToEdit}
+          setItemToEdit={setItemToEdit}
         />
       </Modal>
     </div>

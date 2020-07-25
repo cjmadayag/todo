@@ -1,7 +1,7 @@
 import React,{useState} from "react";
 import {Form,Label,Input,Button} from "reactstrap";
 
-const ItemForm = ({setItemFormIsOpen,AddItemOnList,isEditing,setIsEditing,itemToEdit})=>{
+const ItemForm = ({setItemFormIsOpen,AddItemOnList,isEditing,setIsEditing,itemToEdit,setItemToEdit})=>{
 
   const [itemName,setItemName] = useState("")
 
@@ -14,7 +14,7 @@ const ItemForm = ({setItemFormIsOpen,AddItemOnList,isEditing,setIsEditing,itemTo
   const closeButtonOnClick = ()=>{
     setItemFormIsOpen(false)
     setIsEditing(false)
-    setIsEditing({})
+    setItemToEdit({})
   }
 
   return(
