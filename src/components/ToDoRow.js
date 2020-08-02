@@ -1,9 +1,12 @@
 import React from "react"
 import {Table,Button} from "reactstrap"
-import {useContext, ACTIONS} from "../Context"
+import {useContext} from "../contextProvider"
+import * as actions from "../actions";
 
-const ItemTable = ()=>{
+const ToDoList = ()=>{
   const [state,dispatch] = useContext();
+
+  const headerStyle = { width:"33%", textAlign:"center" }
 
   return(
     <Table
@@ -13,27 +16,24 @@ const ItemTable = ()=>{
       <thead>
         <tr>
           <th
-            className="text-center"
-            style={{width:"33%"}}
-          >Item</th>
+            style={headerStyle}
+          >Task</th>
           <th
-            className="text-center"
-            style={{width:"33%"}}
+            style={headerStyle}
           >Status</th>
           <th
-            className="text-center"
-            style={{width:"33%"}}
+            style={headerStyle}
           >Action</th>
         </tr>
       </thead>
       <tbody>
-        {state.list.map(item=>(
+        {state.list.map(task=>(
           <tr
-            key={item.id}
+            key={task.id}
           >
-            <td className="text-center">{item.item}</td>
+            <td className="text-center">{task.item}</td>
             <td className="text-center">
-                {item.isDone?"Completed":"Incomplete"}
+                {task.isDone?"Completed":"Incomplete"}
             </td>
             <td
               className="d-flex justify-content-center"
@@ -42,21 +42,21 @@ const ItemTable = ()=>{
                 size="sm"
                 color="warning"
                 className="mx-1"
-                onClick={()=>dispatch({type:ACTIONS.TOGGLE_EDIT_FORM,payload:item})}
+                onClick={()=>dispatch(actions.toggleEditForm(task))}
               >Edit
               </Button>
               <Button
                 size="sm"
                 color="info"
                 className="mx-1"
-                onClick={()=>dispatch({type:ACTIONS.COMPLETE_TASK,payload:{id:item.id}})}
+                onClick={()=>dispatch(actions.completeTask(task.id))}
               >Done
               </Button>
               <Button
                 size="sm"
                 color="danger"
                 className="mx-1"
-                onClick={()=>dispatch({type:ACTIONS.DELETE_ITEM,payload:{id:item.id}})}
+                onClick={()=>dispatch(actions.deleteItem(task.id))}
               >Delete
               </Button>
             </td>
@@ -67,4 +67,4 @@ const ItemTable = ()=>{
   )
 }
 
-export default ItemTable;
+export default ToDoList;

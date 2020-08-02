@@ -1,5 +1,5 @@
 import React from 'react';
-import {ContextProvider} from "./Context";
+import ContextProvider from "./contextProvider";
 import ToDo from "./pages/ToDo";
 
 const App = ()=>{

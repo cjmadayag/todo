@@ -1,24 +1,25 @@
 import React,{useState} from "react";
 import {Form,Label,Input,Button} from "reactstrap";
-import {useContext,ACTIONS} from "../Context";
+import {useContext} from "../contextProvider";
+import * as actions from "../actions";
 
-const ItemForm = ()=>{
+const ToDoForm = ()=>{
   const [state,dispatch] = useContext();
 
-  const [item,setItem] = useState("");
+  const [task,setTask] = useState("");
 
   return(
     <Form
       className="py-4 d-flex flex-column"
     >
-      <Label className="h5 d-flex justify-content-center mt-3">New Item</Label>
-      <hr className="w-100 p-0 m-0"/>
+      <Label className="h5 d-flex justify-content-center mt-3">New Task</Label>
+      <hr className="w-100"/>
       <Label
         className="ml-5 my-2"
-      >Item Name</Label>
+      >Task Name</Label>
       <Input
         className="col-10 mx-auto"
-        onChange={(e)=>setItem(e.target.value)}
+        onChange={(e)=>setTask(e.target.value)}
         defaultValue={state.isEditing?state.itemToEdit.item:""}
       />
       <div
@@ -29,8 +30,8 @@ const ItemForm = ()=>{
             color="warning"
             className="mr-1"
             onClick={()=>{
-              dispatch({type:ACTIONS.EDIT_ITEM,payload:{item}})
-              setItem("")
+              dispatch(actions.editItem(task))
+              setTask("")
             }}
           >Edit</Button>
           ) : (
@@ -38,8 +39,8 @@ const ItemForm = ()=>{
             color="success"
             className="mr-1"
             onClick={()=>{
-              dispatch({type:ACTIONS.ADD_ITEM,payload:{item}})
-              setItem("")
+              dispatch(actions.addItem(task))
+              setTask("")
             }}
           >Add</Button>
           )
@@ -47,7 +48,7 @@ const ItemForm = ()=>{
         <Button
           color="danger"
           className="ml-1"
-          onClick={()=>dispatch({type:ACTIONS.TOGGLE_FORM})}
+          onClick={()=>dispatch(actions.toggleForm())}
         >
           Close
         </Button>
@@ -56,4 +57,4 @@ const ItemForm = ()=>{
   )
 }
 
-export default ItemForm;
+export default ToDoForm;
