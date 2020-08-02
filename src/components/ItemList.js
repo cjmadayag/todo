@@ -1,50 +1,63 @@
 import React from "react"
 import {Table,Button} from "reactstrap"
+import {useContext, ACTIONS} from "../Context"
 
-const ItemTable = ({list,setItemFormIsOpen,setIsEditing,setItemToEdit,doneButtonOnClick,deleteButtonOnClick})=>{
-
-  const editButtonOnClick = (item)=>{
-    setItemFormIsOpen(true)
-    setIsEditing(true)
-    setItemToEdit(item)
-  }
+const ItemTable = ()=>{
+  const [state,dispatch] = useContext();
 
   return(
-    <Table>
+    <Table
+      borderless
+      size="sm"
+    >
       <thead>
         <tr>
-          <th>Item</th>
-          <th>Status</th>
-          <th>Action</th>
+          <th
+            className="text-center"
+            style={{width:"33%"}}
+          >Item</th>
+          <th
+            className="text-center"
+            style={{width:"33%"}}
+          >Status</th>
+          <th
+            className="text-center"
+            style={{width:"33%"}}
+          >Action</th>
         </tr>
       </thead>
       <tbody>
-        {list.map((item)=>(
+        {state.list.map(item=>(
           <tr
             key={item.id}
           >
-            <td>{item.item}</td>
-            <td>
-                {item.isDone?"Done":"Pending"}
+            <td className="text-center">{item.item}</td>
+            <td className="text-center">
+                {item.isDone?"Complete":"Incomplete"}
             </td>
-            <td>
+            <td
+              className="d-flex justify-content-center"
+            >
               <Button
-                className="mx-1 btn-warning"
-                onClick={()=>editButtonOnClick(item)}
-              >
-                Edit
+                size="sm"
+                color="warning"
+                className="mx-1"
+                onClick={()=>dispatch({type:ACTIONS.TOGGLE_EDIT_FORM,payload:item})}
+              >Edit
               </Button>
               <Button
-                className="mx-1 btn-info"
-                onClick={()=>doneButtonOnClick(item.id)}
-              >
-                Done
+                size="sm"
+                color="info"
+                className="mx-1"
+                onClick={()=>dispatch({type:ACTIONS.COMPLETE_TASK,payload:{id:item.id}})}
+              >Done
               </Button>
               <Button
-                className="mx-1 btn-danger"
-                onClick={()=>deleteButtonOnClick(item.id)}
-              >
-                Delete
+                size="sm"
+                color="danger"
+                className="mx-1"
+                onClick={()=>dispatch({type:ACTIONS.DELETE_ITEM,payload:{id:item.id}})}
+              >Delete
               </Button>
             </td>
           </tr>

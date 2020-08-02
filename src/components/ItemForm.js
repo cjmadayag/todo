@@ -1,21 +1,11 @@
 import React,{useState} from "react";
 import {Form,Label,Input,Button} from "reactstrap";
+import {useContext,ACTIONS} from "../Context";
 
-const ItemForm = ({setItemFormIsOpen,AddItemOnList,isEditing,setIsEditing,itemToEdit,setItemToEdit})=>{
+const ItemForm = ()=>{
+  const [state,dispatch] = useContext();
 
-  const [itemName,setItemName] = useState("")
-
-  const addButtonOnClick = ()=>{
-    AddItemOnList(itemName)
-    setItemFormIsOpen(false)
-    setItemName("")
-  }
-
-  const closeButtonOnClick = ()=>{
-    setItemFormIsOpen(false)
-    setIsEditing(false)
-    setItemToEdit({})
-  }
+  const [item,setItem] = useState("");
 
   return(
     <Form
@@ -28,19 +18,36 @@ const ItemForm = ({setItemFormIsOpen,AddItemOnList,isEditing,setIsEditing,itemTo
       >Item Name</Label>
       <Input
         className="col-10 mx-auto"
-        onChange={(e)=>setItemName(e.target.value)}
-        defaultValue={isEditing?itemToEdit.item:""}
+        onChange={(e)=>setItem(e.target.value)}
+        defaultValue={state.isEditing?state.itemToEdit.item:""}
       />
       <div
         className="mx-auto mt-3"
       >
+        {state.isEditing ? (
+          <Button
+            color="warning"
+            className="mr-1"
+            onClick={()=>{
+              dispatch({type:ACTIONS.EDIT_ITEM,payload:{item}})
+              setItem("")
+            }}
+          >Edit</Button>
+          ) : (
+          <Button
+            color="success"
+            className="mr-1"
+            onClick={()=>{
+              dispatch({type:ACTIONS.ADD_ITEM,payload:{item}})
+              setItem("")
+            }}
+          >Add</Button>
+          )
+        }
         <Button
-          className="mr-1 btn-success"
-          onClick={addButtonOnClick}
-        >{isEditing?"Edit":"Add"}</Button>
-        <Button
-          className="ml-1 btn-danger"
-          onClick={closeButtonOnClick}
+          color="danger"
+          className="ml-1"
+          onClick={()=>dispatch({type:ACTIONS.TOGGLE_FORM})}
         >
           Close
         </Button>
