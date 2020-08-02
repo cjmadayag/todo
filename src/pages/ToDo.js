@@ -1,8 +1,7 @@
 import React from "react";
 import {useContext,ACTIONS} from "../Context";
 import {Form,Label,Button,Modal} from "reactstrap";
-import ItemForm from "../components/ItemForm";
-import ItemList from "../components/ItemList";
+import {ItemForm,ItemList} from "../components";
 
 const ToDo = ()=>{
   const [state,dispatch] = useContext();

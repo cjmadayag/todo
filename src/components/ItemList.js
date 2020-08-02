@@ -33,7 +33,7 @@ const ItemTable = ()=>{
           >
             <td className="text-center">{item.item}</td>
             <td className="text-center">
-                {item.isDone?"Complete":"Incomplete"}
+                {item.isDone?"Completed":"Incomplete"}
             </td>
             <td
               className="d-flex justify-content-center"
